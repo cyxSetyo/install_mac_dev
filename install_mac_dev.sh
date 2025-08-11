@@ -1,51 +1,59 @@
-Write-Host "Hello The AVOLife!"
-Read-Host "Press any key to continue.."
+#!/bin/bash
 
-Set-ExecutionPolicy -ExecutionPolicy Bypass -scope Process -Force
-#-Scope Process -Force
-<#
-.Install Chocolatey
-#>
-Set-ExecutionPolicy -ExecutionPolicy Bypass -scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+echo "Hello The AVOLife!"
+read -n 1 -s -r -p "Press any key to continue..."
+echo ""
 
-choco -?
+# Pastikan Homebrew terinstall
+if ! command -v brew &>/dev/null; then
+    echo "Homebrew belum terinstall. Menginstall Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
-# Google Slavery
-echo Install Google Apps
-choco install google-drive-file-stream
-choco install google-chrome
-choco install google-chat
-choco install drawio
+# Update & upgrade brew
+brew update
+brew upgrade
+
+# Google Apps
+echo "Menginstall Google Apps..."
+brew install --cask google-drive
+brew install --cask google-chrome
+brew install --cask google-chat
+brew install --cask drawio
 
 # Dev Env
-echo Install nodejs, watchman, & composer
+echo "Menginstall Node.js, Watchman, & Composer..."
 brew install node@14
 brew install watchman
 brew install composer
 
 # Core Dev Tools
-choco install sublime-text
-choco install visual-studio-code
-choco install webstorm
-choco install postman
-choco install sequel-pro
-choco install android-studio
-choco install iterm2
-choco install sourcetree
+echo "Menginstall Core Dev Tools..."
+brew install --cask sublime-text
+brew install --cask visual-studio-code
+brew install --cask webstorm
+brew install --cask postman
+brew install --cask sequel-pro
+brew install --cask android-studio
+brew install --cask iterm2
+brew install --cask sourcetree
 
 # Nice to have
-echo Nice to have
-choco install teamviewer
-choco install rectangle
-choco install the-unarchiver
-choco install appcleaner
-choco install vlc
-choco install spotify
-choco install whatsapp
-choco install microsoft-teams
-choco install zoomus
+echo "Menginstall aplikasi tambahan..."
+brew install --cask teamviewer
+brew install --cask rectangle
+brew install --cask the-unarchiver
+brew install --cask appcleaner
+brew install --cask vlc
+brew install --cask spotify
+brew install --cask whatsapp
+brew install --cask microsoft-teams
+brew install --cask zoom
 
-# cleanup
-rm -f -r /Library/Caches/Homebrew/*
+# Cleanup cache Homebrew
+brew cleanup
 
 echo "IT Arena #AvoWebSolutions"
+echo "Selesai!"
