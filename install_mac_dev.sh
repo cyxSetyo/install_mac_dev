@@ -4,6 +4,12 @@ echo "Hello The AVOLife!"
 read -n 1 -s -r -p "Press any key to continue..."
 echo ""
 
+# Minta password sudo sekali di awal
+sudo -v
+
+# Keep-alive sudo session selama script berjalan
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 # Pastikan Homebrew terinstall
 if ! command -v brew &>/dev/null; then
     echo "Homebrew belum terinstall. Menginstall Homebrew..."
